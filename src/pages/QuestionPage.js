@@ -1,15 +1,17 @@
-import classNames from 'classnames';
-import { getQuestionById } from '../api';
-import Avatar from '../components/Avatar';
-import Card from '../components/Card';
-import Container from '../components/Container';
-import DateText from '../components/DateText';
-import Lined from '../components/Lined';
-import Warn from '../components/Warn';
-import styles from './QuestionPage.module.css';
+import classNames from "classnames";
+import { getQuestionById } from "../api";
+import Avatar from "../components/Avatar";
+import Card from "../components/Card";
+import Container from "../components/Container";
+import DateText from "../components/DateText";
+import Lined from "../components/Lined";
+import Warn from "../components/Warn";
+import styles from "./QuestionPage.module.css";
+import { Link, useParams } from "react-router-dom";
 
 function QuestionPage() {
-  const question = getQuestionById('616825');
+  const { questionId } = useParams();
+  const question = getQuestionById(questionId);
 
   return (
     <>
@@ -19,11 +21,9 @@ function QuestionPage() {
             <div className={styles.questionInfo}>
               <div className={styles.content}>
                 <div className={styles.title}>
-                  {question.title}
+                  <Link to={`/questions/${question.id}`}>{question.title}</Link>
                   {question.answers > 0 && (
-                    <span className={styles.count}>
-                      {question.answers.length}
-                    </span>
+                    <span className={styles.count}>{question.answers.length}</span>
                   )}
                 </div>
                 <div className={styles.date}>
@@ -32,10 +32,7 @@ function QuestionPage() {
               </div>
               <Writer className={styles.author} writer={question.writer} />
             </div>
-            <p
-              className={styles.content}
-              dangerouslySetInnerHTML={{ __html: question.content }}
-            />
+            <p className={styles.content} dangerouslySetInnerHTML={{ __html: question.content }} />
           </div>
         </Container>
       </div>
@@ -45,11 +42,7 @@ function QuestionPage() {
         </h2>
         {question.answers.length > 0 ? (
           question.answers.map((answer) => (
-            <Answer
-              key={answer.id}
-              className={styles.answerItem}
-              answer={answer}
-            />
+            <Answer key={answer.id} className={styles.answerItem} answer={answer} />
           ))
         ) : (
           <Warn
