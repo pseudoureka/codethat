@@ -6,6 +6,7 @@ import CoursePage from "./pages/CoursePage";
 import WishlistPage from "./pages/WishlistPage";
 import QuestionListPage from "./pages/QuestionListPage";
 import QuestionPage from "./pages/QuestionPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function Main() {
   return (
@@ -22,6 +23,7 @@ function Main() {
             <Route path="616825" element={<QuestionPage />} />
           </Route>
           <Route path="wishlist" element={<WishlistPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
